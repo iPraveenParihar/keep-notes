@@ -32,7 +32,7 @@ class App extends Component {
 
     var fetchedNotes = [];
 
-    axios.get('http://localhost:8080/notes/')
+    axios.get('/notes/')
       .then(res => {
 
         res.data.forEach((note) => {
@@ -55,7 +55,7 @@ class App extends Component {
 
   handlenoteSaveCallback = (note) => {
 
-    axios.post('http://localhost:8080/notes/add', note)
+    axios.post('/notes/add', note)
       .then(res => console.log(res.data))
       .catch(error => console.log(error));
 
@@ -68,7 +68,7 @@ class App extends Component {
 
   handleNoteDeleteCallback = (deletedNote) => {
 
-    const url = 'http://localhost:8080/notes/' + deletedNote.id;
+    const url = '/notes/' + deletedNote.id;
 
     axios.delete(url)
       .then(res => console.log(res.data))
