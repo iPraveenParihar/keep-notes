@@ -47,8 +47,8 @@ function TakeNote(props) {
         });
         props.noteSaveCallback(note);
         setOpen(false);
-        setNoteText(null);
-        setNoteTitle(null);
+        setNoteText("");
+        setNoteTitle("");
     }
 
     const handleClickAway = () => {

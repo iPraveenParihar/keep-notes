@@ -32,9 +32,9 @@ class App extends Component {
 
     var fetchedNotes = [];
 
-    axios.get('/notes/')
+    axios.get('http://localhost:5000/notes')
       .then(res => {
-
+       
         res.data.forEach((note) => {
           var noteObject = new Note({
             id: note['_id'],
@@ -53,22 +53,33 @@ class App extends Component {
       .catch(error => console.log(error));
   }
 
-  handlenoteSaveCallback = (note) => {
+  handlenoteSaveCallback = async (note) => {
+  
+    await axios.post('http://localhost:5000/notes/add', note)
+      .then((res) => {
+        const responseData = res.data;
+      
+        const addedNote = new Note({
+          id: responseData['_id'],
+          title: responseData['title'],
+          noteText: responseData['noteText'],
+          noteColor: responseData['noteColor']
+        });
 
-    axios.post('/notes/add', note)
-      .then(res => console.log(res.data))
-      .catch(error => console.log(error));
-
-    this.state.notes.unshift(note);
-    this.setState(
-      { notes: this.state.notes, snackBarMessage: "Noted Saved" }
-    );
-
+    
+        this.state.notes.unshift(addedNote);
+        this.setState(
+          { notes: this.state.notes, snackBarMessage: "Noted Saved" }
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   handleNoteDeleteCallback = (deletedNote) => {
 
-    const url = '/notes/' + deletedNote.id;
+    const url = 'http://localhost:5000/notes/' + deletedNote.id;
 
     axios.delete(url)
       .then(res => console.log(res.data))
@@ -101,6 +112,7 @@ class App extends Component {
       </Router>
     );
   }
+
 }
 
 export default App;

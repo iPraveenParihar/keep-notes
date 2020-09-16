@@ -11,7 +11,7 @@
     "install-client":"cd client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build",
     "dev": "concurrently -n 'server,client' -c 'red,green'  \"nodemon server.js\" \"npm run client\""
-  },
+  },  
   "keywords": [],
   "author": "Praveen M",
   "license": "ISC",
